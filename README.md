@@ -6,7 +6,7 @@ A web-based volunteer management system built with ReactJS and Python. This appl
 
 ## Overview
 
-VolunteerSys Web is a full-stack volunteer management platform designed to make it easier for organizations to manage their volunteer programs.
+The EZ-Volunteer Sys application is a full-stack volunteer management platform designed to make it easier for organizations to manage their volunteer programs.
 
 ## Tech Stack
 
