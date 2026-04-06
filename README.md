@@ -39,8 +39,8 @@ Instructions for setting up and running each component can be found in their res
 
 ## Inspiration
 - I was inspired to make this project because many non-profit organisations track volunteer assignments using spreadsheets (Microsoft Excel, Google Sheets).
-- While this does have its advantages, having a large amount of volunteers could over-complicate the management process, slowing down requests for verification 
--     (especially prominent for high schoolers who need to complete community service hours)
+- While this does have its advantages, having a large amount of volunteers could over-complicate the management process, slowing down requests for verification
+                \_especially prominent for high schoolers who need to complete community service hours_\
 - To combat this, I've designed a simple yet intuitive portal for the Web, where organizations are able to track hours easily and print a copy of a volunteer's shifts.
 
 ## Contributing
