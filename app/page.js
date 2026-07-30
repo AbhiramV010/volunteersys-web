@@ -17,18 +17,32 @@ function homepage() {
         navigate.push('/compile')
     }
 
+    const buttonStyle = {
+        fontSize: '1.5rem',
+        padding: '1rem 2rem',
+        width: '20rem',
+        borderRadius: '0.75rem',
+        border: '1px solid var(--border)',
+        background: 'var(--accent)',
+        color: 'var(--accent-foreground)',
+        cursor: 'pointer',
+    };
+
     return (
-        <div>
-            <button onClick={dir_addvol}>Add Volunteer</button>
-            <br />
-            <br />
-            <button onClick={dir_addhrs}>Add Hours</button>
-            <br />
-            <br />
-            <button onClick={dir_softcheck}>View Hours</button>
-            <br />
-            <br />
-            <button onClick={dir_allrecords}>Compile All Shifts</button>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1.5rem',
+                minHeight: '100vh',
+            }}
+        >
+            <button style={buttonStyle} onClick={dir_addvol}>Add Volunteer</button>
+            <button style={buttonStyle} onClick={dir_addhrs}>Add Hours</button>
+            <button style={buttonStyle} onClick={dir_softcheck}>View Hours</button>
+            <button style={buttonStyle} onClick={dir_allrecords}>Compile All Shifts</button>
         </div>
     )
 }

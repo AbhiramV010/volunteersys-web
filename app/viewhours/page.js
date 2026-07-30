@@ -48,9 +48,10 @@ function ViewHours() {
     const [message, setMessage] = useState('');
 
     return (
-        <form onSubmit={handleSubmit}>
-        <label>
-            Volunteer name ---  
+        <div className="page-container">
+        <form className="form-card" onSubmit={handleSubmit}>
+        <label className="form-field">
+            Volunteer name
             <input
             type="text"
             value={name}
@@ -58,12 +59,9 @@ function ViewHours() {
             required
             />
         </label>
-        <br />
-        <br />
-        <br />
 
-        <label>
-            Phone Number ---  
+        <label className="form-field">
+            Phone Number
             <input
             onChange={(e) => setPhone(e.target.value)}
             type="text"
@@ -71,21 +69,16 @@ function ViewHours() {
             required
             />
         </label>
-        <br />
-        <br />
-        <br />
-    
-        <input type="submit" />
-        <br />
-        <br />
-        <button onClick={dir_home}>Home</button>
-        <br/>
-        <br/>
-        <br/>
-        {message && <p>{message}</p>}
+
+        <div className="form-actions">
+            <input className="btn" type="submit" value="Submit" />
+            <button className="btn btn-secondary" type="button" onClick={dir_home}>Home</button>
+        </div>
+        {message && <p className="form-message">{message}</p>}
 
         </form>
-  );    
+        </div>
+  );
 }
 
 export default ViewHours;

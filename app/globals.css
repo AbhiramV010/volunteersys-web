@@ -1,0 +1,133 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --border: #d4d4d4;
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --accent: #3b82f6;
+  --accent-foreground: #0a0a0a;
+  --border: #333333;
+}
+
+[data-theme="temple"] {
+  --background: #fdf3dd;
+  --foreground: #5c1a1a;
+  --accent: #c8860d;
+  --accent-foreground: #fdf3dd;
+  --border: #c9a876;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+body {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.theme-select {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 26rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-field input {
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--accent-foreground);
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--foreground);
+}
+
+.form-message {
+  text-align: center;
+  word-break: break-word;
+}
+
+.results-table {
+  width: 100%;
+  max-width: 60rem;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
