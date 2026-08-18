@@ -2,6 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { apiUrl } from '../serverConfig';
 
 function AddVolunteer() {
     const navigate = useRouter();
@@ -24,7 +25,7 @@ function AddVolunteer() {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/addvolunteer', {
+      const response = await fetch(apiUrl('/addvolunteer'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(volunteerdata),

@@ -1,6 +1,6 @@
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import ThemeToggle from "./ThemeToggle";
+import SettingsMenu from "./SettingsMenu";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
             __html: `try{document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');}catch(e){}`,
           }}
         />
-        <ThemeToggle />
+        <SettingsMenu />
         {children}
       </body>
     </html>

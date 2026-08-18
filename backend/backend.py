@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import Response
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import *
 from datetime import datetime
+from pdf_report import build_shift_report
 import re
 import numpy as np
 
@@ -43,7 +45,7 @@ system = FastAPI()
 
 origins = ["http://localhost", "http://localhost:3000", "http://localhost:5173"]
 system.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"],
-                      allow_headers=["*"])
+                      allow_headers=["*"], expose_headers=["Content-Disposition"])
 
 
 class Volunteer(BaseModel):
@@ -149,7 +151,10 @@ async def view_hrs(data: softCheck):
                 volunteerID = int(volunteerID)
             except:
                 raise HTTPException(status_code=404, detail="That volunteer was not found, check their name and number")
-            total_hours = func.sum(func.extract('epoch', shiftlist.c.End - shiftlist.c.Start) / 3600).label("TotalHours")
+            # An end time before the start time means the shift ran past midnight, so it owes a full day.
+            elapsed = func.extract('epoch', shiftlist.c.End - shiftlist.c.Start) + case(
+                (shiftlist.c.End < shiftlist.c.Start, 86400), else_=0)
+            total_hours = (func.sum(elapsed) / 3600).label("TotalHours")
             funnel = select(total_hours).where(shiftlist.c.volunteerID == volunteerID)
             
             volhrs = (fetch.execute(funnel).fetchone())[0]
@@ -160,3 +165,34 @@ async def view_hrs(data: softCheck):
             fetch.commit()
             fetch.close() 
         
+
+
+@system.post("/compile")
+async def compile_shifts(data: softCheck):
+    name = data.name
+    phone = data.phone
+
+    if len(phone) != 10:
+        raise HTTPException(status_code=400, detail="Phone number must be 10 digits long")
+
+    with engine.connect() as fetch:
+        find_volunteer = select(masterlist).where(
+            and_(masterlist.c.Fullname == name, masterlist.c.PhoneNum == phone))
+        volunteer = fetch.execute(find_volunteer).fetchone()
+
+        if volunteer is None:
+            raise HTTPException(status_code=404,
+                                detail="That volunteer was not found, check their name and number")
+
+        find_shifts = select(shiftlist).where(
+            shiftlist.c.volunteerID == int(volunteer.ID)).order_by(shiftlist.c.Date, shiftlist.c.Start)
+        shifts = fetch.execute(find_shifts).fetchall()
+
+    document = build_shift_report(volunteer, shifts)
+    slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-') or "volunteer"
+
+    return Response(
+        content=document,
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'attachment; filename="shifts-%s.pdf"' % slug},
+    )

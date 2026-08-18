@@ -2,6 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { apiUrl } from '../serverConfig';
 
 function ViewHours() {
     const navigate = useRouter();
@@ -19,7 +20,7 @@ function ViewHours() {
         }
 
         try {
-        const response = await fetch('http://localhost:8000/viewhours', {
+        const response = await fetch(apiUrl('/viewhours'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(softcheck),

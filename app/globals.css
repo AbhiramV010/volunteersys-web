@@ -40,17 +40,179 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-.theme-select {
+/* Floating settings menu, top right */
+.menu-root {
   position: fixed;
   top: 1.25rem;
   right: 1.25rem;
-  padding: 0.5rem 0.75rem;
+  z-index: 50;
+}
+
+/* No chrome on the trigger — just the bars floating over the page.
+   The 3rem box is kept transparent purely to keep a comfortable tap target. */
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.menu-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-bars span {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* Bar centres sit 7.5px apart (2.5px tall + 5px gap), so that is the travel to meet in the middle. */
+.menu-toggle-open .menu-bars span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.menu-toggle-open .menu-bars span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle-open .menu-bars span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  width: 17rem;
+  padding: 0.4rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.7rem;
+  border: none;
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: rgba(128, 128, 128, 0.16);
+  outline: none;
+}
+
+.menu-item-active {
+  color: var(--accent);
+}
+
+.menu-hint {
+  font-size: 0.8rem;
+  opacity: 0.65;
+  max-width: 8.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.35rem 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.35rem;
+}
+
+.menu-back {
+  border: none;
+  background: transparent;
+  color: inherit;
   font-size: 1rem;
+  line-height: 1;
+  padding: 0.15rem 0.3rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.menu-back:hover {
+  background: rgba(128, 128, 128, 0.16);
+}
+
+.menu-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.35rem 0.7rem 0.5rem;
+}
+
+.menu-label {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.menu-input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
   background: var(--background);
   color: var(--foreground);
-  cursor: pointer;
+}
+
+.menu-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.menu-form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.menu-save {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 0.6rem;
+  font-family: inherit;
+}
+
+.menu-note {
+  margin: 0;
+  padding: 0 0.7rem 0.6rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  word-break: break-word;
 }
 
 .page-container {
