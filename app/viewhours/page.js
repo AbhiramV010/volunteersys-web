@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { apiUrl } from '../serverConfig';
+import { apiUrl, apiHeaders } from '../serverConfig';
 
 function ViewHours() {
     const navigate = useRouter();
@@ -22,7 +22,7 @@ function ViewHours() {
         try {
         const response = await fetch(apiUrl('/viewhours'), {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: apiHeaders(),
             body: JSON.stringify(softcheck),
         });
 

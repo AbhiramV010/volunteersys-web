@@ -1,4 +1,5 @@
 from sqlalchemy import *
+import os
 from datetime import datetime, time
 
 """
@@ -8,7 +9,8 @@ from datetime import datetime, time
     field before it posts, and the lookups match on the stored value exactly.
     The PDF and the app title-case them again for display.
 """
-engine = create_engine('postgresql+psycopg2://postgres:post@localhost:5432/postgres')
+engine = create_engine(os.environ.get(
+    'DATABASE_URL', 'postgresql+psycopg2://postgres:post@localhost:5432/postgres'))
 metadata = MetaData()
 masterlist = Table(
     'volunteers',
@@ -36,22 +38,23 @@ PHONE = "4155550147"
 ADDRESS = "88 Marigold Way, Santa Clara, CA 95051"
 ADMIN = "maria chen"
 
-# date, start, end, signing admin. The May shift runs past midnight on purpose,
-# so the overnight handling gets exercised by the sample data too.
+# date, start, end, signing admin. Ten shifts totalling exactly 54.00 hours.
+# The May shift runs past midnight on purpose, so the overnight handling gets
+# exercised by the sample data too.
 SHIFTS = [
-    ("2026-01-10", "09:00", "13:00", "maria chen"),
-    ("2026-01-24", "09:00", "12:30", "maria chen"),
-    ("2026-02-07", "13:00", "17:30", "maria chen"),
-    ("2026-02-21", "08:30", "12:00", "sam ortiz"),
-    ("2026-03-07", "09:00", "15:00", "maria chen"),
-    ("2026-03-21", "10:00", "14:15", "sam ortiz"),
-    ("2026-04-04", "08:00", "12:00", "maria chen"),
-    ("2026-04-18", "12:00", "18:00", "priya nair"),
-    ("2026-05-02", "09:30", "13:00", "maria chen"),
-    ("2026-05-16", "22:00", "02:00", "sam ortiz"),
-    ("2026-06-06", "07:45", "11:45", "priya nair"),
-    ("2026-06-20", "14:00", "19:30", "maria chen"),
+    ("2026-01-10", "09:00", "14:00", "maria chen"),   # 5.0
+    ("2026-01-24", "08:00", "14:00", "maria chen"),   # 6.0
+    ("2026-02-07", "13:00", "17:30", "sam ortiz"),    # 4.5
+    ("2026-02-21", "08:30", "14:00", "maria chen"),   # 5.5
+    ("2026-03-07", "09:00", "15:00", "priya nair"),   # 6.0
+    ("2026-03-21", "10:00", "14:00", "sam ortiz"),    # 4.0
+    ("2026-04-04", "08:00", "13:00", "maria chen"),   # 5.0
+    ("2026-04-18", "11:00", "18:00", "priya nair"),   # 7.0
+    ("2026-05-02", "09:30", "15:00", "maria chen"),   # 5.5
+    ("2026-05-16", "21:00", "02:30", "sam ortiz"),    # 5.5, runs past midnight
 ]
+
+EXPECTED_HOURS = 54.0
 
 
 def as_time(clock):
@@ -84,9 +87,29 @@ def seed():
     return volunteer_id
 
 
+def total_hours():
+    """Hours the sample data adds up to, counting a past-midnight end as the next day."""
+    total = 0.0
+    for _, start, end, _ in SHIFTS:
+        span = (as_time_delta(end) - as_time_delta(start))
+        if span < 0:
+            span += 24
+        total += span
+    return total
+
+
+def as_time_delta(clock):
+    stamp = datetime.strptime(clock, "%H:%M")
+    return stamp.hour + stamp.minute / 60
+
+
 try:
+    hours = total_hours()
     new_id = seed()
-    print("seeded '%s' (volunteer ID %d) with %d shifts" % (NAME, new_id, len(SHIFTS)))
+    print("seeded '%s' (volunteer ID %d) with %d shifts totalling %.2f hours"
+          % (NAME, new_id, len(SHIFTS), hours))
+    if abs(hours - EXPECTED_HOURS) > 0.001:
+        print("warning: expected %.2f hours, the shift times now add up to %.2f" % (EXPECTED_HOURS, hours))
     print("look them up in the app as: Abhiram Vadali / %s" % PHONE)
 except Exception as problem:
     print("Could not seed the sample data:", problem)

@@ -1,9 +1,11 @@
 from sqlalchemy import *
+import os
 
 """
     Creating the tables in postgres
 """
-engine = create_engine('postgresql+psycopg2://postgres:post@localhost:5432/postgres') 
+engine = create_engine(os.environ.get(
+    'DATABASE_URL', 'postgresql+psycopg2://postgres:post@localhost:5432/postgres')) 
 metadata = MetaData()
 masterlist = Table(
     'volunteers',
