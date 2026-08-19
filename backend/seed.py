@@ -36,22 +36,22 @@ shiftlist = Table(
 NAME = "abhiram vadali"
 PHONE = "4155550147"
 ADDRESS = "88 Marigold Way, Santa Clara, CA 95051"
-ADMIN = "maria chen"
+ADMIN = "anjali mehta"
 
 # date, start, end, signing admin. Ten shifts totalling exactly 54.00 hours.
 # The May shift runs past midnight on purpose, so the overnight handling gets
 # exercised by the sample data too.
 SHIFTS = [
-    ("2026-01-10", "09:00", "14:00", "maria chen"),   # 5.0
-    ("2026-01-24", "08:00", "14:00", "maria chen"),   # 6.0
-    ("2026-02-07", "13:00", "17:30", "sam ortiz"),    # 4.5
-    ("2026-02-21", "08:30", "14:00", "maria chen"),   # 5.5
+    ("2026-01-10", "09:00", "14:00", "anjali mehta"),   # 5.0
+    ("2026-01-24", "08:00", "14:00", "anjali mehta"),   # 6.0
+    ("2026-02-07", "13:00", "17:30", "arjun verma"),    # 4.5
+    ("2026-02-21", "08:30", "14:00", "anjali mehta"),   # 5.5
     ("2026-03-07", "09:00", "15:00", "priya nair"),   # 6.0
-    ("2026-03-21", "10:00", "14:00", "sam ortiz"),    # 4.0
-    ("2026-04-04", "08:00", "13:00", "maria chen"),   # 5.0
+    ("2026-03-21", "10:00", "14:00", "arjun verma"),    # 4.0
+    ("2026-04-04", "08:00", "13:00", "anjali mehta"),   # 5.0
     ("2026-04-18", "11:00", "18:00", "priya nair"),   # 7.0
-    ("2026-05-02", "09:30", "15:00", "maria chen"),   # 5.5
-    ("2026-05-16", "21:00", "02:30", "sam ortiz"),    # 5.5, runs past midnight
+    ("2026-05-02", "09:30", "15:00", "anjali mehta"),   # 5.5
+    ("2026-05-16", "21:00", "02:30", "arjun verma"),    # 5.5, runs past midnight
 ]
 
 EXPECTED_HOURS = 54.0
