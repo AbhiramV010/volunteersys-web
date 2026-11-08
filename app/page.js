@@ -18,6 +18,7 @@ function homepage() {
     }
 
     const buttonStyle = {
+        maxWidth: '90vw',
         fontSize: '1.5rem',
         padding: '1rem 2rem',
         width: '20rem',
@@ -30,6 +31,7 @@ function homepage() {
 
     return (
         <div
+            className="home-stack"
             style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -37,12 +39,13 @@ function homepage() {
                 justifyContent: 'center',
                 gap: '1.5rem',
                 minHeight: '100vh',
+                paddingBottom: '3rem',
             }}
         >
-            <button style={buttonStyle} onClick={dir_addvol}>Add Volunteer</button>
-            <button style={buttonStyle} onClick={dir_addhrs}>Add Hours</button>
-            <button style={buttonStyle} onClick={dir_softcheck}>View Hours</button>
-            <button style={buttonStyle} onClick={dir_allrecords}>Compile All Shifts</button>
+            <button className="home-btn" style={buttonStyle} onClick={dir_addvol}>Add Volunteer</button>
+            <button className="home-btn" style={buttonStyle} onClick={dir_addhrs}>Add Hours</button>
+            <button className="home-btn" style={buttonStyle} onClick={dir_softcheck}>View Hours</button>
+            <button className="home-btn" style={buttonStyle} onClick={dir_allrecords}>Compile All Shifts</button>
         </div>
     )
 }
